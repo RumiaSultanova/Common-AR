@@ -28,6 +28,7 @@ namespace Modules.Core
             AddService(new ARSessionManager());
             AddService(new ARModeSwitcherUIService());
             AddService(gameObject.AddComponent<CustomInput>());
+            AddService(new PlacementController());
         }
 
         private void Start()
@@ -47,6 +48,14 @@ namespace Modules.Core
         {
             _services.TryGetValue(typeof(T), out var service);
             return service as T;
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var service in _services)
+            {
+                service.Value.Destroy();
+            }
         }
     }
 }

@@ -67,7 +67,7 @@ namespace Modules.InputService
             }
         }
 
-        private void OnDestroy()
+        public void Destroy()
         {
             _disposables.Dispose();
         }

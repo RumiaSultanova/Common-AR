@@ -12,7 +12,6 @@ namespace Modules.ARService
 {
     public class ARSessionManager : IInject
     {
-        private ARSession _arSession;
         private ARSessionOrigin _arSessionOrigin;
 
         private ARPlaneManager _planeManager;
@@ -29,7 +28,6 @@ namespace Modules.ARService
 
         public void Inject(SceneContainer container)
         {
-            _arSession = container.ARSession;
             _arSessionOrigin = container.ARSessionOrigin;
 
             RaycastManager = _arSessionOrigin.gameObject.AddComponent<ARRaycastManager>();
@@ -46,15 +44,12 @@ namespace Modules.ARService
                 handle =>
                 {
                     _imageManager.trackedImagePrefab = handle.Result;
-
-                    _placementController = new PlacementController(handle.Result, container);
                 };
         }
-        
+
         public ARMode SwitchMode()
         {
-            SetActive((int) _mode, false);
-            _arSession.Reset();
+            SetActive(_mode, false);
    
             _mode++;
             if ((int) _mode >= ModesCount)
@@ -62,25 +57,29 @@ namespace Modules.ARService
                 _mode -= ModesCount;
             }
 
-            SetActive((int) _mode, true);
+            SetActive(_mode, true);
             ModeChangedSubject.OnNext(_mode);
             
             return _mode;
         }
 
-        private void SetActive(int id, bool state)
+        private void SetActive(ARMode id, bool state)
         {
-            switch ((ARMode) id)
+            switch (id)
             {
                 case ARMode.Marker:
                     _imageManager.enabled = state;
+                    _imageManager.SetTrackablesActive(state);
                     break;
                 case ARMode.Plane:
                     _planeManager.enabled = state;
+                    _planeManager.SetTrackablesActive(state);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
+        
+        public void Destroy() { }
     }
 }

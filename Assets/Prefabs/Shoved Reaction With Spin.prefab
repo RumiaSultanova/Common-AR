@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!111 &-6436953036360490167
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2496442569818438505}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 0edff4c8d20bdb648bd277ee2f22c55f, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 0edff4c8d20bdb648bd277ee2f22c55f, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!114 &440969553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,27 +28,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8633afd8532eef4d8357cc2f6ac3ae2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 5528369226400537797}
-  touchState: Shoved Reaction With Spin
---- !u!95 &5528369226400537797
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2496442569818438505}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 67928bc0a80a1a84098738cae2926415, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  _animation: {fileID: -6436953036360490167}
 --- !u!1001 &3342881054238033464
 PrefabInstance:
   m_ObjectHideFlags: 0
