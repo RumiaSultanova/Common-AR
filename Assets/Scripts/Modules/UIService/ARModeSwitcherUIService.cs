@@ -21,11 +21,13 @@ namespace Modules.UIService
                     _ui.SwitchMode.onClick.AddListener(SwitchMode);
                 };
         }
-
+        
         private void SwitchMode()
         {
             var mode = _sessionManager.SwitchMode();
             _ui.SetLabel(mode.ToString());
         }
+    
+        public void Destroy() { }
     }
 }
