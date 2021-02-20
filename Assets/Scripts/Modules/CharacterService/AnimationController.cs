@@ -7,7 +7,11 @@ namespace Modules.CharacterService
 {
     public class AnimationController : MonoBehaviour
     {
-        [SerializeField] private Animation _animation;
+        [SerializeField] private Animator _animator;
+        private string touchState = "Shoved Reaction With Spin";
+        private bool IsToushState => _animator.GetCurrentAnimatorStateInfo(0).IsName(touchState);
+        private static readonly int Play = Animator.StringToHash("Play");
+        private static readonly int ForceStop = Animator.StringToHash("ForceStop");
 
         private void Awake()
         {
@@ -17,7 +21,12 @@ namespace Modules.CharacterService
 
         private void ScreenTouched(Vector2 touch)
         {
-            _animation.Play();
+            if (IsToushState)
+            {
+                _animator.SetTrigger(ForceStop);
+            }
+            
+            _animator.SetTrigger(Play);
         }
     }
 }

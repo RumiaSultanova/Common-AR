@@ -1,20 +1,34 @@
 using System;
+using System.Collections.Generic;
+using Modules.ARService;
 using Modules.Core;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.XR.ARFoundation;
 
 namespace Modules.InputService
 {
     public class CustomInput : MonoBehaviour, IInject
     {
         public readonly Subject<Vector2> TouchEnterSubject = new Subject<Vector2>();
+        public readonly Subject<Vector3> PhysicsEnterSubject = new Subject<Vector3>();
 
-        public void Inject(SceneContainer container) { }
+        private ARSessionManager _arSession;
         
-        void Update()
+        private readonly CompositeDisposable _disposables = new CompositeDisposable();
+
+        public void Inject(SceneContainer container)
         {
-            CheckTouch();
+            _arSession = container.GetService<ARSessionManager>();
+        }
+        
+        private void Awake()
+        {
+            Observable
+                .EveryUpdate()
+                .Subscribe(_ => CheckTouch())
+                .AddTo(_disposables);
         }
 
         private void CheckTouch()
@@ -29,6 +43,7 @@ namespace Modules.InputService
             {
                 case TouchPhase.Began:
                     TouchEnterSubject?.OnNext(touch.position);
+                    CheckPhysics(touch.position);
                     break;
                 case TouchPhase.Moved:
                     break;
@@ -41,6 +56,20 @@ namespace Modules.InputService
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void CheckPhysics(Vector2 touch)
+        {
+            var hits = new List<ARRaycastHit>();
+            if (_arSession.RaycastManager.Raycast(touch, hits))
+            {
+                PhysicsEnterSubject.OnNext(hits[0].pose.position);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            _disposables.Dispose();
         }
     }
 }

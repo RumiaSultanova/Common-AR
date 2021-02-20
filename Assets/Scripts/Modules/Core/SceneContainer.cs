@@ -13,7 +13,11 @@ namespace Modules.Core
         private static SceneContainer _instance;
         public static SceneContainer Instance => _instance;
         
-        public ARSessionOrigin ARSessionOrigin;
+        public ARSession ARSession => _arSession;
+        public ARSessionOrigin ARSessionOrigin => _arSessionOrigin;
+
+        [SerializeField] private ARSession _arSession;
+        [SerializeField] private ARSessionOrigin _arSessionOrigin;
         
         private readonly Dictionary<Type, IInject> _services = new Dictionary<Type, IInject>();
 
@@ -21,7 +25,7 @@ namespace Modules.Core
         {
             _instance = this;
             
-            AddService(new ARModeSwitcher());
+            AddService(new ARSessionManager());
             AddService(new ARModeSwitcherUIService());
             AddService(gameObject.AddComponent<CustomInput>());
         }

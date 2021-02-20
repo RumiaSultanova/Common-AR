@@ -211,7 +211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 479a46117f124865bc2b9153b93fe804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ARSessionOrigin: {fileID: 293954583}
+  _arSession: {fileID: 885678446}
+  _arSessionOrigin: {fileID: 293954583}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
